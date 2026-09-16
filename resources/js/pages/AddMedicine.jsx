@@ -28,7 +28,6 @@ export default function AddMedicine() {
         e.preventDefault();
         setServerError('');
 
-        // Inline client-side validation for required fields
         const validationErrors = {};
         if (!formData.name.trim()) {
             validationErrors.name = 'Brand name is required';
@@ -47,7 +46,6 @@ export default function AddMedicine() {
 
         setSubmitting(true);
         try {
-            // POST to Laravel backend
             await axios.post('/api/medicines', {
                 name: formData.name.trim(),
                 category: formData.category.trim(),
@@ -55,7 +53,6 @@ export default function AddMedicine() {
                 price: formData.price !== '' ? Number(formData.price) : 0,
             });
 
-            // Return directly to list view without manual browser refresh
             navigate('/medicines', { state: { successMessage: 'Medicine added successfully.' } });
         } catch (err) {
             if (err.response?.data?.errors) {
@@ -73,11 +70,11 @@ export default function AddMedicine() {
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="card shadow-sm border-0">
-                        <div className="card-header bg-dark text-white py-3">
+                        <div className="card-header card-header-pink py-3">
                             <h5 className="mb-0 fw-bold">Add Medicine</h5>
-                            <small className="text-secondary">Fill in the required fields</small>
+                            <small className="opacity-75">Fill in the required fields</small>
                         </div>
-                        <div className="card-body p-4">
+                        <div className="card-body p-4 bg-white">
                             {serverError && (
                                 <div className="alert alert-danger py-2 small" role="alert">
                                     {serverError}
@@ -85,7 +82,6 @@ export default function AddMedicine() {
                             )}
 
                             <form onSubmit={handleSubmit}>
-                                {/* Required: Brand Name */}
                                 <div className="mb-3">
                                     <label className="form-label small fw-semibold">Brand Name *</label>
                                     <input
@@ -102,7 +98,6 @@ export default function AddMedicine() {
                                     )}
                                 </div>
 
-                                {/* Required: Category */}
                                 <div className="mb-3">
                                     <label className="form-label small fw-semibold">Category *</label>
                                     <input
@@ -118,7 +113,6 @@ export default function AddMedicine() {
                                     )}
                                 </div>
 
-                                {/* Required: Stock Quantity */}
                                 <div className="mb-3">
                                     <label className="form-label small fw-semibold">Stock Quantity *</label>
                                     <input
@@ -135,7 +129,6 @@ export default function AddMedicine() {
                                     )}
                                 </div>
 
-                                {/* Optional: Price */}
                                 <div className="mb-3">
                                     <label className="form-label small fw-semibold">Price (PHP)</label>
                                     <input

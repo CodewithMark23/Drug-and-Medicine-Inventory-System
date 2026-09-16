@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar({ user, onLogout }) {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
+        <nav className="navbar navbar-expand-lg navbar-custom mb-4 shadow-sm">
             <div className="container">
                 <Link className="navbar-brand fw-bold" to="/medicines">
                     Drug and Medicine Inventory System
@@ -11,11 +11,11 @@ export default function Navbar({ user, onLogout }) {
 
                 {user && (
                     <div className="navbar-nav d-flex flex-row align-items-center gap-3">
-                        <Link className="nav-link text-white" to="/medicines">
+                        <Link className="nav-link" to="/medicines">
                             Medicine List
                         </Link>
-                        <Link className="nav-link text-white" to="/medicines/create">
-                            + Add Medicine
+                        <Link className="nav-link" to="/medicines/create">
+                            Add Medicine
                         </Link>
                     </div>
                 )}
@@ -23,12 +23,12 @@ export default function Navbar({ user, onLogout }) {
                 <div className="navbar-nav ms-auto d-flex align-items-center flex-row">
                     {user && (
                         <>
-                            <span className="text-light me-3 small">
+                            <span className="me-3 small" style={{ color: 'var(--color-secondary-slate-dark)' }}>
                                 User: <strong>{user.name}</strong>
                             </span>
                             <button
                                 onClick={onLogout}
-                                className="btn btn-outline-light btn-sm"
+                                className="btn btn-logout btn-sm"
                             >
                                 Logout
                             </button>

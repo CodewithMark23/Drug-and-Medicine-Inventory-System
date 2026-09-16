@@ -25,7 +25,7 @@ export default function Login({ onLoginSuccess, authError }) {
             if (err.response && err.response.data && err.response.data.error) {
                 setError(err.response.data.error);
             } else {
-                setError('Invalid credentials. Please re-Enter the correct Username or Password');
+                setError('Invalid credentials. Please enter user: pharmacist and password: med123.');
             }
         } finally {
             setLoading(false);
@@ -37,11 +37,11 @@ export default function Login({ onLoginSuccess, authError }) {
             <div className="row justify-content-center">
                 <div className="col-md-5 col-lg-4">
                     <div className="card shadow-sm border-0">
-                        <div className="card-header bg-dark text-white text-center py-3">
-                            <h5 className="mb-0 fw-bold">Log In</h5>
-                            <small className="text-secondary">Drug and Medicine Inventory System</small>
+                        <div className="card-header card-header-pink text-center py-3">
+                            <h5 className="mb-0 fw-bold">Sign In</h5>
+                            <small className="opacity-75">Drug and Medicine Inventory System</small>
                         </div>
-                        <div className="card-body p-4">
+                        <div className="card-body p-4 bg-white">
                             {error && (
                                 <div className="alert alert-danger py-2 small" role="alert">
                                     {error}
@@ -79,12 +79,12 @@ export default function Login({ onLoginSuccess, authError }) {
                                     className="btn btn-primary w-100 py-2 fw-semibold"
                                     disabled={loading}
                                 >
-                                    {loading ? 'Patungo na sa MEDICOLEGAL' : 'Sign In'}
+                                    {loading ? 'Authenticating...' : 'Sign In'}
                                 </button>
                             </form>
 
                             <div className="mt-4 pt-3 border-top text-center text-muted small">
-                                Username: <strong>pharmacist</strong> / Password: <strong>med123</strong>
+                                Default Credentials: <strong>pharmacist</strong> / <strong>med123</strong>
                             </div>
                         </div>
                     </div>
