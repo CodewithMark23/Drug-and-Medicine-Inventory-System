@@ -23,7 +23,7 @@ export default function Navbar({ user, onLogout }) {
                 <div className="navbar-nav ms-auto d-flex align-items-center flex-row">
                     {user && (
                         <>
-                            <span className="me-3 small" style={{ color: 'var(--color-secondary-slate-dark)' }}>
+                            <span className="me-3 small text-white">
                                 User: <strong>{user.name}</strong>
                             </span>
                             <button

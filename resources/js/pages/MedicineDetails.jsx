@@ -100,7 +100,7 @@ export default function MedicineDetails() {
                     )}
 
                     <div className="card shadow-sm border-0">
-                        <div className="card-header card-header-pink py-3 d-flex justify-content-between align-items-center">
+                        <div className="card-header card-header-teal py-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 className="mb-0 fw-bold">Medicine Full Details</h5>
                                 <small className="opacity-75">Database Record ID: #{medicine.id}</small>

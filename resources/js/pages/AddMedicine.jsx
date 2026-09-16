@@ -70,7 +70,7 @@ export default function AddMedicine() {
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="card shadow-sm border-0">
-                        <div className="card-header card-header-pink py-3">
+                        <div className="card-header card-header-teal py-3">
                             <h5 className="mb-0 fw-bold">Add Medicine</h5>
                             <small className="opacity-75">Fill in the required fields</small>
                         </div>

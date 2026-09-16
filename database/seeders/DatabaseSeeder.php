@@ -42,5 +42,19 @@ class DatabaseSeeder extends Seeder
             'quantity' => 500,
             'price' => 15.0,
         ]);
+
+         Medicine::create([
+            'name' => 'Myra E',
+            'category' => 'Beauty Supplement/ Vitamin E',
+            'quantity' => 500,
+            'price' => 169.0,
+        ]);
+
+         Medicine::create([
+            'name' => 'Sisters',
+            'category' => 'Feminine/hygine',
+            'quantity' => 500,
+            'price' => 22.0,
+        ]);
     }
 }

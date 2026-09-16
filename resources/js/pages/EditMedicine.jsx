@@ -94,7 +94,7 @@ export default function EditMedicine() {
             <div className="row justify-content-center">
                 <div className="col-md-8 col-lg-6">
                     <div className="card shadow-sm border-0">
-                        <div className="card-header card-header-pink py-3">
+                        <div className="card-header card-header-teal py-3">
                             <h5 className="mb-0 fw-bold">Edit Medicine</h5>
                             <small className="opacity-75">Update record #{id}</small>
                         </div>

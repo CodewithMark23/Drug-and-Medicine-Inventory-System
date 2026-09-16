@@ -1,273 +1,55 @@
-# Drug & Medicine Inventory System
-### 2-Hour Lab Exam Quick Reference Guide (Laravel + Inertia.js + React)
+# Drug and Medicine Inventory System (Single Page Application)
 
-A simplified, streamlined full-stack Laravel + React application ready for your exam.
+A simple, plain React SPA with Laravel backend and SQLite database persistence.
 
 ---
 
-## 1. Running the Application
+## 1. Credentials
 
-Open two terminals:
+- **Username**: `pharmacist`
+- **Password**: `med123`
 
-**Terminal 1 (Laravel Server):**
+---
+
+## 2. React Router Client-Side Routes
+
+All protected routes require logging in as `pharmacist`:
+
+| Route | Component | Description |
+|---|---|---|
+| `/login` | `Login.jsx` | Login screen with validation |
+| `/medicines` | `MedicineList.jsx` | Full medicine table with search filter |
+| `/medicines/create` | `AddMedicine.jsx` | Dedicated screen to add a medicine |
+| `/medicines/:id` | `MedicineDetails.jsx` | Detailed review screen for a medicine |
+| `/medicines/:id/edit` | `EditMedicine.jsx` | Screen to edit an existing medicine |
+
+You can navigate directly to the add screen using the URL:
+```
+http://localhost:8000/medicines/create
+```
+
+---
+
+## 3. Running the Application
+
+Open two terminals in the project root:
+
+**Terminal 1 (Backend):**
 ```bash
 php artisan serve
 ```
 
-**Terminal 2 (Vite React Hot-Reload):**
+**Terminal 2 (Frontend React):**
 ```bash
 npm run dev
 ```
 
----
-
-## 2. Common Artisan Commands
-
-| Task | Command |
-|---|---|
-| **Make Model + Migration + Controller** | `php artisan make:model Medicine -mcr` |
-| **Run Migrations** | `php artisan migrate` |
-| **Reset/Fresh Database** | `php artisan migrate:fresh` |
-| **Clear Cache** | `php artisan optimize:clear` |
+Open browser: **http://localhost:8000**
 
 ---
 
-## 3. Routes (`routes/web.php`)
+## 4. Database Reset / Seed
 
-```php
-use App\Http\Controllers\MedicineController;
-use Inertia\Inertia;
-
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-});
-
-// Single-line complete CRUD routes:
-Route::resource('medicines', MedicineController::class);
-```
-
----
-
-## 4. Model Setup (`app/Models/Medicine.php`)
-
-```php
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Medicine extends Model
-{
-    // Allows mass-assignment:
-    protected $guarded = [];
-}
-```
-
----
-
-## 5. Controller with Inertia (`app/Http/Controllers/MedicineController.php`)
-
-```php
-namespace App\Http\Controllers;
-
-use App\Models\Medicine;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-
-class MedicineController extends Controller
-{
-    // 1. List
-    public function index()
-    {
-        return Inertia::render('Medicines/Index', [
-            'medicines' => Medicine::latest()->get()
-        ]);
-    }
-
-    // 2. Create Page
-    public function create()
-    {
-        return Inertia::render('Medicines/Create');
-    }
-
-    // 3. Store in DB
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer',
-        ]);
-
-        Medicine::create($validated);
-        return redirect()->route('medicines.index')->with('success', 'Medicine added successfully!');
-    }
-
-    // 4. Edit Page
-    public function edit(Medicine $medicine)
-    {
-        return Inertia::render('Medicines/Edit', [
-            'medicine' => $medicine
-        ]);
-    }
-
-    // 5. Update in DB
-    public function update(Request $request, Medicine $medicine)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer',
-        ]);
-
-        $medicine->update($validated);
-        return redirect()->route('medicines.index')->with('success', 'Medicine updated!');
-    }
-
-    // 6. Delete
-    public function destroy(Medicine $medicine)
-    {
-        $medicine->delete();
-        return redirect()->route('medicines.index')->with('success', 'Medicine deleted!');
-    }
-}
-```
-
----
-
-## 6. React Component Cheatsheet
-
-All pages belong in `resources/js/Pages/` and can use the pre-made `<Layout>` from `../Layouts/Layout`.
-
-### A. List Component (`resources/js/Pages/Medicines/Index.jsx`)
-
-```jsx
-import React from 'react';
-import Layout from '../../Layouts/Layout';
-import { Link, router, Head } from '@inertiajs/react';
-
-export default function Index({ medicines }) {
-    const handleDelete = (id) => {
-        if (confirm('Are you sure you want to delete this medicine?')) {
-            router.delete(`/medicines/${id}`);
-        }
-    };
-
-    return (
-        <Layout>
-            <Head title="Medicines" />
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2>Medicine Inventory</h2>
-                <Link href="/medicines/create" className="btn btn-primary">
-                    + Add Medicine
-                </Link>
-            </div>
-
-            <table className="table table-bordered table-striped bg-white">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th width="180">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {medicines.length > 0 ? (
-                        medicines.map(item => (
-                            <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.quantity}</td>
-                                <td>₱{Number(item.price).toFixed(2)}</td>
-                                <td>
-                                    <Link href={`/medicines/${item.id}/edit`} className="btn btn-sm btn-warning me-2">
-                                        Edit
-                                    </Link>
-                                    <button onClick={() => handleDelete(item.id)} className="btn btn-sm btn-danger">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="4" className="text-center">No medicines found.</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        </Layout>
-    );
-}
-```
-
-### B. Form Component (`resources/js/Pages/Medicines/Create.jsx`)
-
-```jsx
-import React from 'react';
-import Layout from '../../Layouts/Layout';
-import { useForm, Link, Head } from '@inertiajs/react';
-
-export default function Create() {
-    const { data, setData, post, processing, errors } = useForm({
-        name: '',
-        price: '',
-        quantity: 0,
-    });
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        post('/medicines');
-    };
-
-    return (
-        <Layout>
-            <Head title="Add Medicine" />
-            <div className="card p-4 mx-auto" style={{ maxWidth: '600px' }}>
-                <h3 className="mb-3">Add New Medicine</h3>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Medicine Name</label>
-                        <input
-                            type="text"
-                            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                            value={data.name}
-                            onChange={e => setData('name', e.target.value)}
-                        />
-                        {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-                    </div>
-
-                    <div className="mb-3">
-                        <label className="form-label">Price</label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            className={`form-control ${errors.price ? 'is-invalid' : ''}`}
-                            value={data.price}
-                            onChange={e => setData('price', e.target.value)}
-                        />
-                        {errors.price && <div className="invalid-feedback">{errors.price}</div>}
-                    </div>
-
-                    <div className="mb-3">
-                        <label className="form-label">Quantity</label>
-                        <input
-                            type="number"
-                            className={`form-control ${errors.quantity ? 'is-invalid' : ''}`}
-                            value={data.quantity}
-                            onChange={e => setData('quantity', e.target.value)}
-                        />
-                        {errors.quantity && <div className="invalid-feedback">{errors.quantity}</div>}
-                    </div>
-
-                    <button type="submit" className="btn btn-success me-2" disabled={processing}>
-                        Save Medicine
-                    </button>
-                    <Link href="/medicines" className="btn btn-secondary">
-                        Cancel
-                    </Link>
-                </form>
-            </div>
-        </Layout>
-    );
-}
+```bash
+php artisan migrate:fresh --seed
 ```

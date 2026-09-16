@@ -37,7 +37,7 @@ export default function Login({ onLoginSuccess, authError }) {
             <div className="row justify-content-center">
                 <div className="col-md-5 col-lg-4">
                     <div className="card shadow-sm border-0">
-                        <div className="card-header card-header-pink text-center py-3">
+                        <div className="card-header card-header-teal text-center py-3">
                             <h5 className="mb-0 fw-bold">Sign In</h5>
                             <small className="opacity-75">Drug and Medicine Inventory System</small>
                         </div>

@@ -9,5 +9,12 @@ class Medicine extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $table = 'medicines';
+
+    protected $fillable = [
+        'name',
+        'category',
+        'quantity',
+        'price',
+    ];
 }

@@ -95,7 +95,7 @@ export default function MedicineList() {
             {/* Header Controls */}
             <div className="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
                 <div>
-                    <h3 className="fw-bold mb-0" style={{ color: 'var(--primary-slate-dark)' }}>
+                    <h3 className="fw-bold mb-0" style={{ color: 'var(--color-teal-deep)' }}>
                         Medicine Inventory List
                     </h3>
                     <small className="text-muted">
@@ -154,7 +154,7 @@ export default function MedicineList() {
                                             title="Click to view full details"
                                         >
                                             <td className="text-muted small fw-bold">#{item.id}</td>
-                                            <td className="fw-semibold" style={{ color: 'var(--primary-slate-dark)' }}>
+                                            <td className="fw-semibold" style={{ color: 'var(--color-teal-deep)' }}>
                                                 {item.name}
                                             </td>
                                             <td>{item.category || '-'}</td>
