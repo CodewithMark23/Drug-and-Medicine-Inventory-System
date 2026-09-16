@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function Login({ onLoginSuccess, authError }) {
+export default function Login({ onLoginSuccess }) {
     const [username, setUsername] = useState('pharmacist');
     const [password, setPassword] = useState('med123');
-    const [error, setError] = useState(authError || '');
+    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {

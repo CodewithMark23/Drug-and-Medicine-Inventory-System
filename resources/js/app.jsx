@@ -16,7 +16,6 @@ axios.defaults.withCredentials = true;
 function App() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [authError, setAuthError] = useState('');
 
     useEffect(() => {
         const checkSession = async () => {
@@ -37,7 +36,6 @@ function App() {
 
     const handleLoginSuccess = (loggedInUser) => {
         setUser(loggedInUser);
-        setAuthError('');
     };
 
     const handleLogout = async () => {
@@ -47,7 +45,6 @@ function App() {
             // continue logout on client
         }
         setUser(null);
-        setAuthError('');
     };
 
     return (
@@ -63,10 +60,7 @@ function App() {
                                 user ? (
                                     <Navigate to="/medicines" replace />
                                 ) : (
-                                    <Login
-                                        onLoginSuccess={handleLoginSuccess}
-                                        authError={authError}
-                                    />
+                                    <Login onLoginSuccess={handleLoginSuccess} />
                                 )
                             }
                         />
@@ -81,7 +75,7 @@ function App() {
                         <Route
                             path="/medicines"
                             element={
-                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                <ProtectedRoute user={user} loading={loading}>
                                     <MedicineList />
                                 </ProtectedRoute>
                             }
@@ -91,7 +85,7 @@ function App() {
                         <Route
                             path="/medicines/create"
                             element={
-                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                <ProtectedRoute user={user} loading={loading}>
                                     <AddMedicine />
                                 </ProtectedRoute>
                             }
@@ -101,7 +95,7 @@ function App() {
                         <Route
                             path="/medicines/:id"
                             element={
-                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                <ProtectedRoute user={user} loading={loading}>
                                     <MedicineDetails />
                                 </ProtectedRoute>
                             }
@@ -111,7 +105,7 @@ function App() {
                         <Route
                             path="/medicines/:id/edit"
                             element={
-                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                <ProtectedRoute user={user} loading={loading}>
                                     <EditMedicine />
                                 </ProtectedRoute>
                             }
