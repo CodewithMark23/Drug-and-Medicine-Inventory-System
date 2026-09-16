@@ -1,12 +1,25 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar({ user, onLogout }) {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
             <div className="container">
-                <span className="navbar-brand fw-bold">
-                    MEDICOLEGAL Pharmacy & Store
-                </span>
+                <Link className="navbar-brand fw-bold" to="/medicines">
+                    Drug and Medicine Inventory System
+                </Link>
+
+                {user && (
+                    <div className="navbar-nav d-flex flex-row align-items-center gap-3">
+                        <Link className="nav-link text-white" to="/medicines">
+                            Medicine List
+                        </Link>
+                        <Link className="nav-link text-white" to="/medicines/create">
+                            + Add Medicine
+                        </Link>
+                    </div>
+                )}
+
                 <div className="navbar-nav ms-auto d-flex align-items-center flex-row">
                     {user && (
                         <>

@@ -6,9 +6,11 @@ import axios from 'axios';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
-import Inventory from './pages/Inventory';
+import MedicineList from './pages/MedicineList';
+import AddMedicine from './pages/AddMedicine';
+import MedicineDetails from './pages/MedicineDetails';
+import EditMedicine from './pages/EditMedicine';
 
-// Ensure Axios sends cookies / session with requests
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -59,7 +61,7 @@ function App() {
                             path="/login"
                             element={
                                 user ? (
-                                    <Navigate to="/" replace />
+                                    <Navigate to="/medicines" replace />
                                 ) : (
                                     <Login
                                         onLoginSuccess={handleLoginSuccess}
@@ -69,21 +71,54 @@ function App() {
                             }
                         />
 
+                        {/* Redirect / to /medicines */}
                         <Route
                             path="/"
+                            element={<Navigate to="/medicines" replace />}
+                        />
+
+                        {/* Route 1: Medicine List */}
+                        <Route
+                            path="/medicines"
                             element={
-                                <ProtectedRoute
-                                    user={user}
-                                    loading={loading}
-                                    setAuthError={setAuthError}
-                                >
-                                    <Inventory />
+                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                    <MedicineList />
                                 </ProtectedRoute>
                             }
                         />
 
-                        {/* Any other route blocked and redirected */}
-                        <Route path="*" element={<Navigate to="/" replace />} />
+                        {/* Route 2: Add Medicine (Direct navigation) */}
+                        <Route
+                            path="/medicines/create"
+                            element={
+                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                    <AddMedicine />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        {/* Route 3: Medicine Details / Review */}
+                        <Route
+                            path="/medicines/:id"
+                            element={
+                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                    <MedicineDetails />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        {/* Route 4: Edit Medicine */}
+                        <Route
+                            path="/medicines/:id/edit"
+                            element={
+                                <ProtectedRoute user={user} loading={loading} setAuthError={setAuthError}>
+                                    <EditMedicine />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        {/* Catch all fallback */}
+                        <Route path="*" element={<Navigate to="/medicines" replace />} />
                     </Routes>
                 </div>
 
