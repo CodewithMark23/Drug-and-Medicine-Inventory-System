@@ -31,10 +31,14 @@ class MedicineController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'nullable|string|max:255',
+            'category' => 'required|string|max:255',
             'quantity' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
         ]);
+
+        if (!isset($validated['price']) || $validated['price'] === '') {
+            $validated['price'] = 0.00;
+        }
 
         $medicine = Medicine::create($validated);
 
@@ -61,10 +65,14 @@ class MedicineController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'nullable|string|max:255',
+            'category' => 'required|string|max:255',
             'quantity' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
         ]);
+
+        if (!isset($validated['price']) || $validated['price'] === '') {
+            $validated['price'] = 0.00;
+        }
 
         $medicine->update($validated);
 
